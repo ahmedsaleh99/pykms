@@ -14,7 +14,7 @@ Source = "https://github.com/raspberrypi/pykms"
 
 [tool.meson-python.args]
 setup = [
-    '-Drevision=b91affd'
+    '-Drevision=2efdd25'
 ]
 
 [tool.flit.module]

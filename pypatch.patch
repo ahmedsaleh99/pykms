@@ -1,8 +1,9 @@
 diff --git a/py/pykms/meson.build b/py/pykms/meson.build
-index 866be42..d2704d5 100644
+index ed8ab46..2d71f4f 100644
 --- a/py/pykms/meson.build
 +++ b/py/pykms/meson.build
-@@ -1,12 +1,11 @@
+@@ -1,31 +1,25 @@
+ 
 -py3_dep = dependency('python3', required : get_option('pykms'))
 +py3_dep = py.dependency()
  
@@ -17,23 +18,26 @@ index 866be42..d2704d5 100644
  
  if pybind11_dep.found() == false
      pybindings_enabled = false
-@@ -18,14 +17,9 @@ pybindings_enabled = true
+     subdir_done()
+ endif
+ 
+-pybindings_enabled = true
+ 
  pykms_sources = files([
      'pykmsbase.cpp',
      'pykms.cpp',
 +    'pykmsutil.cpp',
  ])
  
--if get_option('utils')
+-if get_option('libutils')
 -    pykms_sources += files([
 -        'pykmsutil.cpp',
 -    ])
 -endif
--
+ 
  if libdrmomap_dep.found()
      pykms_sources += files([
-         'pykmsomap.cpp',
-@@ -34,26 +28,12 @@ endif
+@@ -35,26 +29,13 @@ endif
  
  pykms_deps = [
      libkmsxx_dep,
@@ -42,7 +46,7 @@ index 866be42..d2704d5 100644
      pybind11_dep,
  ]
  
--if get_option('utils')
+-if get_option('libutils')
 -    pykms_deps += [ libkmsxxutil_dep ]
 -endif
 -
@@ -57,7 +61,7 @@ index 866be42..d2704d5 100644
 -                      name_prefix : '',
 -                      dependencies : pykms_deps,
 -                      cpp_args : pykms_args)
--
+ 
 -# Copy __init__.py to build dir so that we can run without installing
 -configure_file(input: '__init__.py', output: '__init__.py', copy: true,
 -               install : true, install_dir : destdir)
@@ -65,3 +69,4 @@ index 866be42..d2704d5 100644
 +    '-fvisibility=hidden',
 +    '-DPYBIND11_USE_SMART_HOLDER_AS_DEFAULT',
 +]
+\ No newline at end of file
